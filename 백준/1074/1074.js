@@ -3,79 +3,52 @@ const [N, r, c] = require("fs")
     .toString()
     .trim()
     .split(" ");
-
-const getCord = (arr) => {
-    let x = 0;
-    let y = 0;
-    arr.forEach((arrItem, idx) => {
-        switch (arrItem) {
-            case 0:
-                x += 0;
-                y += 0;
-                break;
-            case 1:
-                x += 0;
-                y += Math.pow(2, idx);
-                break;
-            case 2:
-                x += Math.pow(2, idx);
-                y += 0;
-                break;
-            case 3:
-                x += Math.pow(2, idx);
-                y += Math.pow(2, idx);
-                break;
-            default:
-                break;
-        }
-    });
-
-    return { x, y };
-};
 /*
 N 3  2  1
   1, 2, 3
 */
 const solution = (N, r, c) => {
-    let start = new Date();
-    let end = null;
     console.log("N", N);
     console.log("r", r);
     console.log("c", c);
-    let count = -1;
-    let jobFinish = false;
-    const posArr = new Array(Number(N));
-    // console.log('posArr: ', posArr)
 
-    const Z = (N) => {
-        for (let index = 0; index < 4; index++) {
-            posArr[N - 1] = index;
-            if (Number(N) === 1) {
-                count += 1;
-                // console.log("posArr: ", posArr);
-                const cord = getCord(posArr);
+    let _N = Number(N);
+    let _r = Number(r);
+    let _c = Number(c);
 
-                if (cord.x === Number(r) && cord.y === Number(c)) {
-                    console.log("answer: ", count);
-                    jobFinish = true;
-                    end = new Date();
-                    break;
-                }
-            } else {
-                if (jobFinish) break;
+    let count = 0;
 
-                Z(N - 1);
-            }
-
-            // r,c 에 도착하면 탈출. -> 어떻게 탈출함?
-            // 아니면 count 증가.
+    const checkPos = (checkNumber, N) => {
+        let count = null;
+        const DOUBLE_CHECK_NUMBER = checkNumber * checkNumber;
+        if (_r < checkNumber && _c < checkNumber) {
+            count = 0;
+        } else if (_r < checkNumber && _c >= checkNumber) {
+            _c -= checkNumber;
+            count = DOUBLE_CHECK_NUMBER;
+        } else if (_r >= checkNumber && _c < checkNumber) {
+            _r -= checkNumber;
+            count = DOUBLE_CHECK_NUMBER * 2;
+        } else {
+            _c -= checkNumber;
+            _r -= checkNumber;
+            count = DOUBLE_CHECK_NUMBER * 3;
         }
+
+        return count;
     };
 
-    Z(N, 0);
+    while (_N !== 0) {
+        const checkNumber = Math.pow(2, _N) / 2;
 
-    console.log("start", start);
-    console.log("end", end);
+        console.log("checkNumber", checkNumber);
+        console.log("시작");
+
+        count += checkPos(checkNumber, _N);
+        _N -= 1;
+    }
+
+    console.log("count", count);
 };
 
 solution(N, r, c);
@@ -133,6 +106,32 @@ ex)
 10 11
 
 2
+
+0 1 2 3 4 5 6 7 
+0 1 2 3 4 5 6 7 
+
+6 3
+
+N = 3
+2^N = 8
+/2 = 4
+
+x가 4보다 크고 y가 4보다 작다. 2사분면 ->  4*4가 2개 -> 16*2 = 32
+6 3 -> 2 3
+
+N = 2
+2^N = 4
+/2 = 2
+
+x가 2보다 크고 y가 2보다 크다. 3사분면 -> 2*2가 3개 -> 12
+
+2 3 -> 0 1 1사분면. -> 2번째 -> 2 
+
+= 32+ 12+2 = 46 - 1 =  45(답)
+
+
+2 3
+0 2 => 2
 
 
 N = 3
