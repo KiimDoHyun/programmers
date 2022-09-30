@@ -1,29 +1,15 @@
-// H-index (실패)
+// H-index (성공)
 
 function solution(citations) {
-    console.log(citations);
-    let countUp = 0;
-    let countDown = 0;
-    const Max = Math.max(...citations);
-    if (Max === 0) {
-        return 0;
-    }
+    let answer = 0;
 
-    for (let targetH = 0; targetH <= Max; targetH++) {
-        countUp = 0;
-        countDown = 0;
-        citations.forEach((citation) => {
-            if (citation >= targetH) {
-                countUp += 1;
-            } else if (citation <= targetH) {
-                countDown += 1;
-            }
-        });
+    citations = citations.sort((a, b) => b - a);
 
-        if (countUp === targetH && countUp >= countDown) {
-            break;
+    for (let idx = 0; idx < citations.length; idx++) {
+        if (idx >= citations[idx]) {
+            return idx;
         }
     }
 
-    return countUp;
+    return citations.length;
 }
