@@ -19,7 +19,7 @@ function solution(s) {
     return answer;
 }
 
-// 다른 사람 코드에서 본 2진수 변환을 직접 구현한 함수
+// 다른 사람 코드에서 참고한 2진수 변환을 직접 구현한 함수
 /*
 function binary(n){
     let result = "";
