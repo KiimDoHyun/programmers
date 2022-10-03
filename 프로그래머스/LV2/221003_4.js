@@ -1,7 +1,6 @@
 // 연습문제 > 숫자의 표현
 
 // n을 연속된 자연수로 표현.
-
 function solution(n) {
     var answer = 0;
 
