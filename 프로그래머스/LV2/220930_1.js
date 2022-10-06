@@ -1,11 +1,11 @@
-// 카카오 사각형 자르기 (히든케이스 실패)
+// 2018 KAKAO BLIND RECRUITMENT > 카카오 사각형 자르기
 
 function solution(m, n, board) {
     var answer = 0;
     let boardArr = [...board];
 
     boardArr = boardArr.map((arr) => arr.split(""));
-
+    // console.log('초기상태\n', boardArr)
     let workDone = false;
     let deleteList = []; // 지워야할 리스트
     while (workDone === false) {
@@ -35,9 +35,6 @@ function solution(m, n, board) {
                     target === boardArr[i + 1][j + 1]
                 ) {
                     // 2*2에 해당하는 좌표를 빈문자열로 바꾼다.
-                    // 문제: 겹쳐있는 경우는 어떻게?
-                    // 해결: 지워야할 좌표를 배열로 저장하고 한바퀴 돌면 해당 좌표를 다 바꾼다.
-                    // 고민: 근데 그럼 반복 수가 많아지는데......
 
                     deleteList.push({ x: i, y: j });
                     deleteList.push({ x: i + 1, y: j });
@@ -65,36 +62,42 @@ function solution(m, n, board) {
             // 다 지우고 배열을 초기화 해준다.
             deleteList = [];
         }
+        // console.log('지운상태\n', boardArr)
 
         // 원래 배열을 수정한다.
-        for (let i = m - 1; i > 1; i--) {
-            for (let j = 0; j < n; j++) {
-                const target = boardArr[i][j];
+        // 아래에서 위로 올라가면서 찾는다.
+        for (let i = 0; i < n; i++) {
+            let findEmpty = false;
+            let emptyPos = null;
 
-                // 빈문자열이 아닐때
-                if (target !== " ") {
-                    // 만약 아래로 내려갈수 있다면.
-                    let go = true;
-                    let startIdx = i;
-                    while (go) {
-                        if (startIdx === 0) break;
-                        const up = boardArr[startIdx - 1][j];
-                        if (up !== " ") {
-                            boardArr[i - 1][j] = boardArr[startIdx - 1][j];
-                            boardArr[startIdx - 1][j] = " ";
-                            break;
-                        } else {
-                            startIdx -= 1;
-                        }
-                    }
-                    // if(boardArr[i + 1][j] === ' ') {
-                    //     // 타겟을 한칸 내린다.
-                    //     boardArr[i + 1][j] = target;
-                    //     boardArr[i][j] = ' ';
-                    // }
+            let j = m - 1;
+            while (j >= 0) {
+                const target = boardArr[j][i];
+                // console.log(`target: ${target}, j: ${j} i: ${i}, `)
+
+                // 만약 빈문자열을 찾았고 처음 찾는거라면
+                // 현재 위치를 기억한다.
+                if (target === " " && findEmpty === false) {
+                    findEmpty = true;
+                    emptyPos = { x: j, y: i };
+                    j -= 1;
+                }
+                // 빈문자열이 아닌 곳을 만난다면 기억해둔 위치와 바꾼다.
+                else if (target !== " " && findEmpty === true) {
+                    // 값 교체
+                    boardArr[emptyPos.x][emptyPos.y] = boardArr[j][i];
+                    boardArr[j][i] = " ";
+
+                    // 바꾼위치 한칸 위로가서 다시 탐색한다.
+                    j = emptyPos.x - 1;
+                    findEmpty = false;
+                    emptyPos = {};
+                } else {
+                    j -= 1;
                 }
             }
         }
+        // console.log('수정상태\n', boardArr)
     }
     // 체크한다.
     for (let i = 0; i < m; i++) {
@@ -110,23 +113,3 @@ function solution(m, n, board) {
 
     return answer;
 }
-
-/*
-
-aa
-bb
-aa
-bb
-zz
-zz
-cc
-
-**
-**
-aa
-bb
-aa
-bb
-cc
-
-*/
