@@ -27,14 +27,19 @@ function solution(m, musicinfos) {
         let musicMelody = "";
         let musicMelodyIdx = 0;
         let target = "";
+
+        while (1) {}
+
         for (let index = 0; index < playTime; index++) {
             if (index + 1 <= melodyPart.length) {
+                // 타겟 찾기 --
                 if (melodyPart[index + 1] === "#") {
                     target = `${melodyPart[index]}${melodyPart[index + 1]}`;
                     index += 1;
                 } else {
                     target = melodyPart[index];
                 }
+                // -- 타겟 찾기
 
                 console.log("target:", target);
             }
