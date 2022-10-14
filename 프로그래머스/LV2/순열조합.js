@@ -62,10 +62,10 @@ function solution(n) {
     };
 
     const combinationResult = makeCombination(array, 3);
-    const permutationResult = makePermutation(array, 3);
+    const permutationResult = makePermutation(array, 5);
 
-    console.log("조합 결과:", combinationResult);
+    // console.log("조합 결과:", combinationResult);
     console.log("순열 결과:", permutationResult);
 }
 
-solution(3, 5);
+solution(5, 5);

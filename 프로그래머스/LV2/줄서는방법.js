@@ -52,7 +52,7 @@ function solution(n, k) {
     return answer;
 }
 
-solution(20, 2);
+solution(5, 12);
 
 /*
 [ 1, 2, 3, 4, 5 ],
