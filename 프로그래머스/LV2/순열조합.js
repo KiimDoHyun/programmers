@@ -34,35 +34,41 @@ function solution(n) {
 
     // 순열 (중복X)
     // combCnt: 몇개를 고를것인가
-    const makePermutation = (array, combCnt) => {
+    const makePermutation = (array, cnt) => {
         let returnArray = [];
-        if (combCnt === 1) {
-            console.log("combCnt가 1이라서 종료.");
+        if (cnt === 1) {
             return array;
         } else {
             for (let idx = 0; idx < array.length; idx++) {
-                // 현재 아이템
                 const arrayItem = array[idx];
-                console.log("현재 아이템", arrayItem);
-                // 다음 넘겨줄 배열
-                // 현재 선택한 값을 제외한 나머지 배열을 넘긴다.
+
+                // 현재 idx를 제외한 배열을 생성
                 const nextArray = [
                     ...array.slice(0, idx),
                     ...array.slice(idx + 1),
                 ];
 
-                let result = makePermutation(nextArray, combCnt - 1);
+                let result = makePermutation(nextArray, idx - 1);
+
                 result = result.map((resultItem) =>
                     [arrayItem].concat(resultItem)
                 );
+                // result = result.map((resultItem) => {
+                //     if(typeof resultItem === 'number') {
+                //         return `${String(arrayItem)}${String(resultItem)}`
+                //     }
+                //     else {
+                //         return `${String(arrayItem)}${resultItem.toString().replaceAll(',', '')}`
+                //     }
+                // })
                 returnArray.push(...result);
             }
         }
         return returnArray;
     };
 
-    const combinationResult = makeCombination(array, 3);
-    const permutationResult = makePermutation(array, 5);
+    // const combinationResult = makeCombination(array, 3);
+    const permutationResult = makePermutation([1, 2, 3], 3);
 
     // console.log("조합 결과:", combinationResult);
     console.log("순열 결과:", permutationResult);

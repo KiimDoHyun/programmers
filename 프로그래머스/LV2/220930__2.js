@@ -15,8 +15,7 @@ function solution(n, k) {
     };
 
     console.log(change_result);
-
-    change_result.forEach((num) => {
+    -change_result.forEach((num) => {
         if (Number(num) > 1) {
             console.log("num", num);
             if (isPrime(Number(num))) {
