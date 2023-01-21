@@ -1,5 +1,4 @@
 // 스택/큐 > 다리를 지나는 트럭
-
 function solution(bridge_length, weight, truck_weights) {
     let answer = 0;
     let bridge = new Array(bridge_length); // -> 내부 값을 다 더하면 총 무게.
