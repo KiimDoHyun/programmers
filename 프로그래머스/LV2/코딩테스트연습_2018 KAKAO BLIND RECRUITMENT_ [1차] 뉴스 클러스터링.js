@@ -1,6 +1,5 @@
 // 2018 KAKAO BLIND RECRUITMENT > [1차] 뉴스 클러스터링
 
-
 // function solution(str1, str2) {
 //     // 대소문자는 동일시 한다.
 //     // 특수문자가 있으면 그 쌍은 버린다.
