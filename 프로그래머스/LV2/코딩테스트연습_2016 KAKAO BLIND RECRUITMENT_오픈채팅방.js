@@ -1,5 +1,4 @@
 // 2019 KAKAO BLINE RECRUITMENT > 오픈채팅방
-
 function solution(record) {
     let idObj = {};
     let el = null;
